@@ -1,10 +1,14 @@
 package com.liu.shiro.config;
 
 import com.liu.shiro.real.MyRealm;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,13 +19,14 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    /**
+    /** 配置Shiro的安全管理器
      * 配置一个SecurityManager 资源管理器
      * @return
      */
     @Bean
     public SecurityManager securityManager(Realm myRealm){
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
+        // 设置一个Realm，这个Realm是最终用于完成我们的认证号和授权操作的具体对象
         defaultWebSecurityManager.setRealm(myRealm);
         return defaultWebSecurityManager;
     }
@@ -54,15 +59,40 @@ public class ShiroConfig {
         map.put("/login","anon");
         // 配置登出的请求，登出后会清空当前用户的内存
         map.put("/logout","logout");
-        // 配置一个admin开头的所有请求需要登录，authc表示需要登录认证
-        map.put("/admin/**","authc");
-        // 配置一个user开头的所有请求需要登录，authc表示需要登录认证
-        map.put("/user/**","authc");
+        /**
+         * roles[admin] 表示 以/admin/**开头的请求需要拥有admin角色才可以访问否   则返回没有权限的页面
+         * perms[admin:add] 表示 /admin/test的请求需要拥有 admin:add权限才可访问
+         * 注意：admin:add仅仅是一个普通的字符串用于标记某个权限功能
+         */
+        // 配置一个admin开头的所有请求需要登录，authc表示需要登录认证,roles[admin]表示所有以admin开头的请求需要admin的角色授权才可以使用
+        // map.put("/admin/**","authc,roles[admin]");
+        // 配置一个user开头的所有请求需要登录，authc表示需要登录认证，roles[user]表示所有以user开头的请求需要user的角色授权才可以使用
+        // map.put("/user/**","authc,roles[user]");
         // 配置剩余的所有请求全部需要登录验证，（注意：这个要写在最后）
         map.put("/**","authc");
         // 设置权限拦截规则
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
+    }
+
+    /**
+     * 开启shiro注解支持（@RequiresRoles(),@RequiresPermissions()）
+     */
+    @Bean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
+        DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
+        proxyCreator.setProxyTargetClass(true);
+        return proxyCreator;
+    }
+
+    /**
+     * 开启aop的注解支持
+     */
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager);
+        return advisor;
     }
 
 }
