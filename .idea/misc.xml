@@ -7,6 +7,8 @@
         <option value="$PROJECT_DIR$/Swagger/pom.xml" />
         <option value="$PROJECT_DIR$/Swagger3/pom.xml" />
         <option value="$PROJECT_DIR$/Shiro/pom.xml" />
+        <option value="$PROJECT_DIR$/Shiro+Mybatis/pom.xml" />
+        <option value="$PROJECT_DIR$/Shiro-Mybatis/pom.xml" />
       </list>
     </option>
   </component>

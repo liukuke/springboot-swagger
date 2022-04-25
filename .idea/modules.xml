@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Shiro/Shiro.iml" filepath="$PROJECT_DIR$/Shiro/Shiro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Shiro-Mybatis/Shiro-Mybatis.iml" filepath="$PROJECT_DIR$/Shiro-Mybatis/Shiro-Mybatis.iml" />
       <module fileurl="file://$PROJECT_DIR$/Swagger/Swagger.iml" filepath="$PROJECT_DIR$/Swagger/Swagger.iml" />
       <module fileurl="file://$PROJECT_DIR$/Swagger3/Swagger3.iml" filepath="$PROJECT_DIR$/Swagger3/Swagger3.iml" />
     </modules>

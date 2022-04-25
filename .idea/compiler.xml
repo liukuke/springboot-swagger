@@ -8,12 +8,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Swagger3" />
-        <module name="Swagger" />
+        <module name="Shiro-Mybatis" />
         <module name="Shiro" />
+        <module name="Swagger" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Shiro" target="1.8" />
+      <module name="Shiro-Mybatis" target="1.8" />
       <module name="Swagger" target="1.8" />
       <module name="Swagger3" target="1.8" />
     </bytecodeTargetLevel>
@@ -21,6 +23,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Shiro" options="-parameters" />
+      <module name="Shiro-Mybatis" options="-parameters" />
       <module name="Swagger" options="-parameters" />
       <module name="Swagger3" options="-parameters" />
     </option>
