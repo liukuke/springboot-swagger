@@ -15,17 +15,25 @@ import java.util.Set;
 public class MyRealm extends AuthorizingRealm {
     @Resource
     private UserDao userDao;
+
+
+    public MyRealm(){
+
+    }
+
     /**
      * 认证
      * @param authenticationToken
-     * @return
+     * @return AuthenticationInfo是一个接口所以返回的是他的一个实现类SimpleAuthenticationInfo
      * @throws AuthenticationException
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        // 获取用户信息
+        // 获取用户信息（用户名+密码）
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-
+        // 直接使用authenticationToken获取用户名
+        String name = (String) authenticationToken.getPrincipal();
+        // 使用UsernamePasswordToken获取用户名
         String username = null;
         if (token.getUsername()!=null){
             username=token.getUsername();
@@ -44,7 +52,7 @@ public class MyRealm extends AuthorizingRealm {
     /**
      * 授权
      * @param principalCollection
-     * @return
+     * @return AuthorizationInfo是一个接口所以返回的是他的一个实现类simpleAuthorizationInfo
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {

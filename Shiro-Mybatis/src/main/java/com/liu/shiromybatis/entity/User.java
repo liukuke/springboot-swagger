@@ -22,4 +22,8 @@ public class User {
      * 1 代表锁定 0 代表不锁定
      */
     private Integer status;
+    /**
+     * 盐值
+     */
+    private String salt;
 }

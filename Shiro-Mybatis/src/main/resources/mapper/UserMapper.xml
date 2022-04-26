@@ -6,6 +6,6 @@
 
 <mapper namespace="com.liu.shiromybatis.dao.UserDao">
     <select id="getUser" resultType="com.liu.shiromybatis.entity.User">
-            select username,password,role,permission,status from user where username=#{username}
+            select username,password,role,permission,status,salt from user where username=#{username}
     </select>
 </mapper>

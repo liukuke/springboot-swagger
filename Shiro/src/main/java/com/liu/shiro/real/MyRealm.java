@@ -47,6 +47,7 @@ public class MyRealm extends AuthorizingRealm {
         if (token.getPassword()!=null){
             password=new String(token.getPassword());
         }
+
         // 认证账号,正常情况我们需要这里从数据库中获取账号的信息，以及其他关键数据，例如账号是否被冻结等等
         String dbName1="admin";
         String dbName2="zhangsan";

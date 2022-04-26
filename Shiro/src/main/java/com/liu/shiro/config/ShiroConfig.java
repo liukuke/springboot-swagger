@@ -21,6 +21,7 @@ public class ShiroConfig {
 
     /** 配置Shiro的安全管理器
      * 配置一个SecurityManager 资源管理器
+     * SecurityManager继承Authenticator, Authorizer, SessionManager
      * @return
      */
     @Bean
