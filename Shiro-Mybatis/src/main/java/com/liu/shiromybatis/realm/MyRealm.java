@@ -7,7 +7,6 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -71,12 +70,19 @@ public class MyRealm extends AuthorizingRealm {
         User user = userDao.getUser(username);
 
         Set<String> roles = new HashSet<>();
+        // 获取用户角色信息填入set集合中
         roles.add(user.getRole());
         Set<String> permissions = new HashSet<>();
+        // 获取用户权限信息填入set集合中
         permissions.add(user.getPermission());
+        // 构建AuthorizationInfo接口的实现类（资源校验）对象
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        simpleAuthorizationInfo.setRoles(roles);
-        simpleAuthorizationInfo.setStringPermissions(permissions);
+        // 将角色加入信息中 addRoles可以使用Collection类型的集合作为参数
+        // setRoles 只能使用set集合作为参数
+        simpleAuthorizationInfo.addRoles(roles);
+        // 将权限加入信息中 addStringPermissions可以使用Collection类型的集合作为参数
+        // setStringPermissions 只能使用set集合作为参数
+        simpleAuthorizationInfo.addStringPermissions(permissions);
 
         return simpleAuthorizationInfo;
     }
